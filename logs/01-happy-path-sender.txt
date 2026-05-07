@@ -1,0 +1,4 @@
+[+] Đã gửi bản mã.
+Key: 876c7738421d5eba
+IV: 3b34ad47b540cf76
+Ciphertext: 5ea6bb3751585b476952af2398ce1d8bbb2cd53403287c89ce93c93d9f8f37d323946a5f173847bc
