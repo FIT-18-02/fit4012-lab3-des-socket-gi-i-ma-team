@@ -1,17 +1,10 @@
-# Logs minh chứng
+# Logs
 
-Thư mục này dùng để lưu log chạy thật của **nhóm 2 người**.
+Thư mục này chứa log minh chứng khi chạy demo Sender/Receiver.
 
-Gợi ý đặt tên file:
-- `01-happy-path-member1.txt`
-- `02-happy-path-member2.txt`
-- `03-tamper.txt`
-- `04-wrong-key.txt`
-- `05-header-error.txt`
+Các file chính:
 
-Mỗi file log nên cho thấy:
-- thời điểm chạy,
-- ai trong nhóm thực hiện ca demo,
-- input / tình huống,
-- kết quả nhận được,
-- nếu lỗi thì lỗi xuất hiện ở đâu.
+- `01-happy-path-sender.txt`: log phía Sender, gồm thông báo gửi thành công, DES key, IV và ciphertext ở dạng hex.
+- `01-happy-path-receiver.txt`: log phía Receiver, gồm bản tin gốc sau khi giải mã thành công.
+
+Lưu ý: log chỉ dùng message demo vô hại. Không đưa dữ liệu cá nhân hoặc dữ liệu nhạy cảm vào log nộp bài.

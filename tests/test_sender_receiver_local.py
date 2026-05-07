@@ -41,17 +41,10 @@ def test_local_sender_receiver_roundtrip():
     )
 
     try:
-        started = False
-        start_time = time.time()
-        collected = []
-        while time.time() - start_time < 5:
-            line = receiver.stdout.readline()
-            if line:
-                collected.append(line)
-                if "Đang lắng nghe" in line:
-                    started = True
-                    break
-        assert started, "Receiver không khởi động đúng. Output: " + "".join(collected)
+        # Give the receiver a short moment to bind/listen before Sender connects.
+        # Avoid blocking on readline() because a test should fail fast instead of hanging.
+        time.sleep(1)
+        assert receiver.poll() is None, "Receiver exited too early before Sender connected."
 
         sender = subprocess.run(
             [sys.executable, "sender.py"],
@@ -63,13 +56,13 @@ def test_local_sender_receiver_roundtrip():
             check=True,
         )
         receiver_out, _ = receiver.communicate(timeout=10)
-        full_receiver_output = "".join(collected) + receiver_out
 
         assert "[+] Đã gửi bản mã." in sender.stdout
         assert "Key:" in sender.stdout
         assert "IV:" in sender.stdout
         assert "Ciphertext:" in sender.stdout
-        assert "[+] Bản tin gốc: Xin chao FIT4012 - local integration test" in full_receiver_output
+        assert "[+] Bản tin gốc: Xin chao FIT4012 - local integration test" in receiver_out
     finally:
         if receiver.poll() is None:
             receiver.kill()
+            receiver.wait(timeout=5)
